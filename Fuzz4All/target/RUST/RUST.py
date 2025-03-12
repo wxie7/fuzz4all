@@ -22,6 +22,7 @@ class RustTarget(Target):
         os.makedirs(self.temp_dir, exist_ok=True)
         os.makedirs(self.cov_dir, exist_ok=True)
         os.makedirs(self.obj_dir, exist_ok=True)
+        os.makedirs(self.code_dir, exist_ok=True)
 
     def write_back_file(self, code):
         filepath = os.path.join(self.code_dir, "temp2024.rs")
