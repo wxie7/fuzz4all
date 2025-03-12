@@ -136,7 +136,7 @@ class CTarget(Target):
             return FResult.FAILURE, compiler
 
         # remove the executable
-        subprocess.run(f"rm /tmp/out{self.CURRENT_TIME}", shell=True)
+        # subprocess.run(f"rm /tmp/out{self.CURRENT_TIME}", shell=True)
 
         if exit_code.returncode == 1:
             if "undefined reference to `main'" in exit_code.stderr:

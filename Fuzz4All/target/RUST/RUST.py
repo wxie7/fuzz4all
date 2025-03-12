@@ -18,6 +18,7 @@ class RustTarget(Target):
         self.temp_dir = os.environ.get("TMPDIR", "/tmp")
         self.cov_dir = os.path.join(self.temp_dir, "fuzz4all/rust/coverage")
         self.obj_dir = os.path.join(self.temp_dir, "fuzz4all/rust/object")
+        self.code_dir = os.path.join(self.temp_dir, "fuzz4all/rust/code")
         os.makedirs(self.temp_dir, exist_ok=True)
         os.makedirs(self.cov_dir, exist_ok=True)
         os.makedirs(self.obj_dir, exist_ok=True)
@@ -60,13 +61,13 @@ class RustTarget(Target):
             ]
         )
         return code
-    
+
     def has_ice_msg(self, msg):
         return "'rustc' panicked" in msg or "internal compiler error" in msg
 
 
     def validate_compiler(self, compiler, filename) -> (FResult, str):
-        
+
         env = os.environ.copy()
         env["LLVM_PROFILE_FILE"] = "/dev/null"
         flags = ["--crate-type", "staticlib",
@@ -89,7 +90,7 @@ class RustTarget(Target):
                 timeout=30,
                 text=True,
             )
-            
+
             if exit_code.returncode == 124:
                 return FResult.TIMED_OUT, compiler
 
